@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Ano', 'Leonardo', 'Outros'],
+          ['2015', 350, 200],
+          ['2016', 375, 210],
+          ['2017', 300, 180],
+          ['2018', 800, 195],
+          ['2019', 1200, 250]             
+        ]);
+       var view = new google.visualization.DataView(data);
+       view.setColumns([0, 1, 2]);
+
+       var options = {title:"Consumo anual de café por pessoa",
+            width:600, height:400,
+            vAxis: {title: "Ano"},
+            hAxis: {title: "Xícara"}};
+
+       var chart = new google.visualization.BarChart( 
+           document.getElementById('chart_div'));
+       chart.draw(view, options);
+
+       var selectHandler = function(e) {
+          window.location = data.getValue(chart.getSelection()[0]['row'], 1 );
+       }
+
+       google.visualization.events.addListener(chart, 'select', selectHandler);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 900px; height: 900px;"></div>
+  </body>
+</html>
